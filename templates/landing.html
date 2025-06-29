@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Storelink — Landing</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <header class="landing-header">
+    <div class="container header-content">
+      <a href="/" class="logo">Storelink</a>
+      <nav class="landing-nav">
+        <a href="/login" class="nav-link">Log In</a>
+        <a href="/signup" class="btn btn--primary">Get Started</a>
+      </nav>
+    </div>
+  </header>
+  <section class="hero-landing">
+    <div class="container hero-content">
+      <h1 class="hero-title">Drowning in links?</h1>
+      <p class="hero-subtitle">Save and organize all your links for future inspiration.</p>
+      <a href="/signup" class="btn btn--primary btn--lg">Try It Free</a>
+    </div>
+  </section>
+</body>
+</html>

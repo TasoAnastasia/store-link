@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="auth-container">
+  <h1>Sign Up</h1>
+  
+  <!-- Flash messages for new error handling -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <p class="error">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+  
+  <!-- Keep old error handling for backward compatibility -->
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  
+  <form method="post" class="form auth-form">
+    <input type="email" name="email" placeholder="Email" required class="form__input">
+    <input type="password" name="password" placeholder="Password" required class="form__input">
+    <input type="password" name="confirm_password" placeholder="Confirm Password" required class="form__input">
+    <button type="submit" class="btn btn--primary">Sign Up</button>
+  </form>
+  <p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Log In</a></p>
+</div>
+{% endblock %}

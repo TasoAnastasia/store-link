@@ -1,0 +1,28 @@
+<!-- templates/404.html -->
+{% extends "base.html" %}
+
+{% block title %}Page Not Found{% endblock %}
+
+{% block content %}
+<div class="hero-landing">
+  <div class="hero-content">
+    <div style="margin-bottom: 2rem;">
+      <span class="material-icons-outlined" style="font-size: 4rem; color: rgba(255, 255, 255, 0.8);">search_off</span>
+    </div>
+    <h1 class="hero-title">404 - Page Not Found</h1>
+    <p class="hero-subtitle">
+      Oops! The page you're looking for doesn't exist. It might have been moved, deleted, or you entered the wrong URL.
+    </p>
+    <div class="cta-group">
+      <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('landing') }}" class="btn btn--primary btn--lg">
+        {% if current_user.is_authenticated %}
+          Go to Dashboard
+        {% else %}
+          Go to Home
+        {% endif %}
+      </a>
+      <a href="javascript:history.back()" class="btn btn--outline btn--lg">Go Back</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

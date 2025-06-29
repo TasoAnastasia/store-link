@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+
+<!-- Секция с формой на градиенте -->
+<section class="form-section">
+  <div class="container">
+    <div class="form-card-wrapper">
+      <form class="link-form" method="POST">
+        <input type="url" name="url" class="link-form__input" placeholder="Paste a link here" required>
+        <textarea name="comment" class="link-form__textarea" placeholder="Add description (optional)" rows="3"></textarea>
+        <button type="submit" class="btn btn--primary">Save a link</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Секция с карточками на светлом фоне -->
+<section class="links-section">
+  <div class="container">
+    {% if grouped_links %}
+      {% for date, items in grouped_links %}
+        <div class="date-group">
+          <h4 class="links-date">{{ date }}</h4>
+          <div class="links-grid">
+            {% for item in items %}
+              <div class="card" onclick="window.location.href='{{ item.url }}'">
+                <h3 class="card__title">{{ item.title }}</h3>
+                <a href="{{ item.url }}" target="_blank" class="card__source" onclick="event.stopPropagation()">
+                  {{ item.url|replace('https://','')|replace('http://','') }}
+                </a>
+                {% if item.comment %}
+                  <p class="card__description">{{ item.comment }}</p>
+                {% endif %}
+                <div class="card__preview-wrapper">
+                  <img src="{{ item.preview_url }}" alt="Preview of {{ item.title }}" class="card__preview-img">
+                </div>
+                <div class="card__footer">
+                  <span class="card__date">{{ item.timestamp.strftime('%d.%m.%Y') }}</span>
+                  <div class="card__actions">
+                    <a href="{{ url_for('edit_link', id=item.id) }}" class="btn btn--small btn--outline btn--icon" onclick="event.stopPropagation()">
+                      <span class="material-icons-outlined">edit</span>
+                    </a>
+                    <form action="{{ url_for('delete_link', id=item.id) }}" method="post" class="delete-form" onclick="event.stopPropagation()" onsubmit="return confirm('Are you sure you want to delete this link?');">
+                      <button type="submit" class="btn btn--small btn--outline btn--icon">
+                        <span class="material-icons-outlined">delete</span>
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="links-grid">
+        {% for item in links %}
+          <div class="card" onclick="window.location.href='{{ item.url }}'">
+            <h3 class="card__title">{{ item.title }}</h3>
+            <a href="{{ item.url }}" target="_blank" class="card__source" onclick="event.stopPropagation()">
+              {{ item.url|replace('https://','')|replace('http://','') }}
+            </a>
+            {% if item.comment %}
+              <p class="card__description">{{ item.comment }}</p>
+            {% endif %}
+            <div class="card__preview-wrapper">
+              <img src="{{ item.preview_url }}" alt="Preview of {{ item.title }}" class="card__preview-img">
+            </div>
+            <div class="card__footer">
+              <span class="card__date">{{ item.timestamp.strftime('%d.%m.%Y') }}</span>
+              <div class="card__actions">
+                <a href="{{ url_for('edit_link', id=item.id) }}" class="btn btn--small btn--outline btn--icon" onclick="event.stopPropagation()">
+                  <span class="material-icons-outlined">edit</span>
+                </a>
+                <form action="{{ url_for('delete_link', id=item.id) }}" method="post" class="delete-form" onclick="event.stopPropagation()" onsubmit="return confirm('Are you sure you want to delete this link?');">
+                  <button type="submit" class="btn btn--small btn--outline btn--icon">
+                    <span class="material-icons-outlined">delete</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+<!-- templates/500.html -->
+{% extends "base.html" %}
+
+{% block title %}Server Error{% endblock %}
+
+{% block content %}
+<div class="hero-landing">
+  <div class="hero-content">
+    <div style="margin-bottom: 2rem;">
+      <span class="material-icons-outlined" style="font-size: 4rem; color: #e63946;">error_outline</span>
+    </div>
+    <h1 class="hero-title">500 - Server Error</h1>
+    <p class="hero-subtitle">
+      Something went wrong on our end. We're working to fix this issue. Please try again in a few moments.
+    </p>
+    <div class="cta-group">
+      <a href="{{ url_for('dashboard') if current_user.is_authenticated else url_for('landing') }}" class="btn btn--primary btn--lg">
+        {% if current_user.is_authenticated %}
+          Go to Dashboard
+        {% else %}
+          Go to Home
+        {% endif %}
+      </a>
+      <a href="javascript:location.reload()" class="btn btn--outline btn--lg">Try Again</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
